@@ -12,13 +12,14 @@ class Trie {
     let newArr = arr;
     if (node.children[word[0]] && word.length === 1) { 
 
-      if (node.children[word[0]].completeWord === null) {
+      if (node.children[word[0]].completeWord.word === null) {
         newArr.push(word[0])
-        node.children[word[0]].completeWord = newArr.join('');
+        node.children[word[0]].completeWord.word = newArr.join('');
         this.count++;
 
       } else {
         return 'That word already exists'
+
       }
       
     } else if (node.children[word[0]]) {
@@ -28,9 +29,9 @@ class Trie {
     } else {
       node.children[word[0]] = new Node(word[0])
       
-      if (word.length === 1 && node.children[word[0]].completeWord === null) {
+      if (word.length === 1 && node.children[word[0]].completeWord.word === null) {
         newArr.push(word[0])
-        node.children[word[0]].completeWord = newArr.join('');
+        node.children[word[0]].completeWord.word = newArr.join('');
         this.count++;
         
       } else {
@@ -58,6 +59,9 @@ class Trie {
     }
     
     this.findTheWords(currentNode)
+    this.suggestions.sort((a, b) => b.timesChosen - a.timesChosen)
+
+    this.suggestions = this.suggestions.map( ({word}) => word )
     return this.suggestions
   }
   
@@ -65,9 +69,9 @@ class Trie {
     let childrenKeys = Object.keys(currentNode.children);
     
     childrenKeys.forEach(key => {
-      if (currentNode.children[key].completeWord) {
+      if (currentNode.children[key].completeWord.word) {
         this.suggestions.push(currentNode.children[key].completeWord)
-      } 
+        } 
       this.findTheWords(currentNode.children[key])
     })
   }
@@ -81,12 +85,21 @@ class Trie {
       }
       currentNode = currentNode.children[splitStr[i]]
     }
-    if(currentNode.completeWord) {
-      currentNode.completeWord = null;
+    if(currentNode.completeWord.word) {
+      currentNode.completeWord.word = null;
       this.count--
     } else {
       return 'That\'s not a word.'
     }
+  }
+
+  select(word) {
+    let splitStr = [...word.toLowerCase()]
+    let currentNode = this.root
+    for (let i = 0; i < splitStr.length; i++) {
+      currentNode = currentNode.children[splitStr[i]]
+    }
+    currentNode.completeWord.timesChosen++
   }
 }
 

@@ -39,7 +39,7 @@ describe('Trie', () => {
     it('should mark a completed word at the final node', () => {
       tree.insert('oh')
 
-      assert.equal(tree.root.children.o.children.h.completeWord, 'oh')
+      assert.equal(tree.root.children.o.children.h.completeWord.word, 'oh')
     })
 
     it('should not create additional nodes after word is complete', () => {
@@ -138,4 +138,52 @@ describe('Trie', () => {
     })
   })
 
+  describe('Select', () => {
+
+    beforeEach(()=> {
+      tree.insert('chamomile')
+      tree.insert('chameleon')
+      tree.insert('charizard')
+      tree.insert('chapstik')
+      tree.insert('charmander')
+      tree.insert('chap')
+    })
+
+    it('should allow the suggest function to prioritize previously selected words', () => {
+      tree.suggest('cha')
+      assert.equal(tree.suggestions[0], 'chamomile')
+
+      tree.select('charmander')
+      tree.suggest('cha')
+      assert.equal(tree.suggestions[0], 'charmander')
+    })
+
+    it('should increment the timesChosen attribute on correct node indefinitely', () => {
+      tree.insert('hi')
+      for (var i = 0; i < 1000; i++) {
+        tree.select('hi')
+      }
+      assert.equal(tree.root.children.h.children.i.completeWord.timesChosen, 1000)
+    })
+
+    it('should prioritize words that have been selected more than other selected words', () => {
+      tree.select('charmander')
+      tree.select('charmander')
+      tree.select('chamomile')
+
+      tree.suggest('cha')
+      assert.equal(tree.suggestions[0], 'charmander')
+    })
+
+    it('should remember how many times a word has been chosen if deleted then re-inserted', () => {
+      tree.insert('hi')
+      tree.select('hi')
+      tree.select('hi')
+      tree.delete('hi')
+
+      tree.insert('hi')
+
+      assert.equal(tree.root.children.h.children.i.completeWord.timesChosen, 2)
+    })
+  })
 })

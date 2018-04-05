@@ -2,7 +2,10 @@ class Node {
   constructor(value = null) {
     this.value = value;
     this.children = {};
-    this.completeWord = null;
+    this.completeWord = {
+      word: null,
+      timesChosen: 0
+    }
   }
 }
 
