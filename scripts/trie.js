@@ -79,7 +79,7 @@ class Trie {
     let currentNode = this.root
     for (let i = 0; i < splitStr.length; i++) {
       if (currentNode === undefined) {
-        return 'That\'s not a word you dope'
+        return 'That\'s not a word.'
       }
       currentNode = currentNode.children[splitStr[i]]
     }
@@ -87,7 +87,7 @@ class Trie {
       currentNode.completeWord = null;
       this.count--
     } else {
-      return 'That\'s not a word you dope'
+      return 'That\'s not a word.'
     }
   }
 }
