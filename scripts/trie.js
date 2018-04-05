@@ -67,10 +67,8 @@ class Trie {
     childrenKeys.forEach(key => {
       if (currentNode.children[key].completeWord) {
         this.suggestions.push(currentNode.children[key].completeWord)
-        this.findTheWords(currentNode.children[key])
-      } else {
-        this.findTheWords(currentNode.children[key])
-      }
+      } 
+      this.findTheWords(currentNode.children[key])
     })
   }
 
