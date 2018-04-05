@@ -19,6 +19,14 @@ describe('Trie', () => {
     assert.deepEqual(tree.root, node)
   })
 
+  it('should have an array to store suggested words', () => {
+    assert.deepEqual(tree.suggestions, [])
+  })
+
+  it('should have a property called count that starts at zero and keeps track of words', () => {
+    assert.equal(tree.count, 0)
+  })
+
   describe('Insert', () => {
 
     it('should take a word and make corresponding nodes', () => {
