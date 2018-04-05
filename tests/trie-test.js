@@ -97,6 +97,37 @@ describe('Trie', () => {
       tree.populate(dictionary)
       assert.equal(tree.count, 234371)
     })
+
+  })
+
+  describe('Delete', () => {
+    it('should remove a completed word from trie', () => {
+      tree.populate(dictionary)
+      tree.suggest('zebra')
+
+      assert.deepEqual(tree.suggestions, [ 'zebraic', 'zebralike', 'zebrass', 'zebrawood' ])
+
+      tree.delete('zebrawood')
+      tree.suggest('zebra')
+
+      assert.deepEqual(tree.suggestions, [ 'zebraic', 'zebralike', 'zebrass' ])
+    })
+
+    it('should decrease the word count', () => {
+      tree.populate(dictionary)
+      assert.equal(tree.count, 234371)
+
+      tree.delete('zebrawood')
+      assert.equal(tree.count, 234370)
+    })
+
+    it('should not decrease word count if word doesn\'t exist', () => {
+      tree.populate(dictionary)
+      assert.equal(tree.count, 234371)
+
+      tree.delete('OnyxIsAGoodDog')
+      assert.equal(tree.count, 234371)
+    })
   })
 
 })

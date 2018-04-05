@@ -74,6 +74,23 @@ class Trie {
       }
     })
   }
+
+  delete(str) {
+    let splitStr = [...str.toLowerCase()]
+    let currentNode = this.root
+    for (let i = 0; i < splitStr.length; i++) {
+      if (currentNode === undefined) {
+        return 'That\'s not a word you dope'
+      }
+      currentNode = currentNode.children[splitStr[i]]
+    }
+    if(currentNode.completeWord) {
+      currentNode.completeWord = null;
+      this.count--
+    } else {
+      return 'That\'s not a word you dope'
+    }
+  }
 }
 
 module.exports = {
