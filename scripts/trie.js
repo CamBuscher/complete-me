@@ -11,9 +11,8 @@ class Trie {
     word = word.toLowerCase()
     let newArr = arr;
     if (node.children[word[0]] && word.length === 1) { 
-      let isWordComplete = node.children[word[0]].completeWord
 
-      if (isWordComplete === null) {
+      if (node.children[word[0]].completeWord === null) {
         newArr.push(word[0])
         node.children[word[0]].completeWord = newArr.join('');
         this.count++;
