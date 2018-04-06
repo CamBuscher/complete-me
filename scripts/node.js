@@ -4,11 +4,11 @@ class Node {
     this.children = {};
     this.completeWord = {
       word: null,
-      timesChosen: 0
-    }
+      timesChosen: 0,
+    };
   }
 }
 
 module.exports = {
-  Node
-}
+  Node,
+};
