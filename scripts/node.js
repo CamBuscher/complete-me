@@ -3,8 +3,8 @@ class Node {
     this.value = value;
     this.children = {};
     this.completeWord = {
-      word: null,
       timesChosen: 0,
+      word: null
     };
   }
 }

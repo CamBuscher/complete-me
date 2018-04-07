@@ -1,4 +1,4 @@
-const { Node } = require('../scripts/node.js');
+const {Node} = require('../scripts/node.js');
 
 class Trie {
   constructor() {
@@ -40,7 +40,7 @@ class Trie {
   }
 
   populate(arr) {
-    arr.forEach((el) => {
+    arr.forEach(el => {
       this.insert(el);
     });
   }
@@ -66,7 +66,7 @@ class Trie {
   findTheWords(currentNode) {
     const childrenKeys = Object.keys(currentNode.children);
 
-    childrenKeys.forEach((key) => {
+    childrenKeys.forEach(key => {
       if (currentNode.children[key].completeWord.word) {
         this.suggestions.push(currentNode.children[key].completeWord);
         }
